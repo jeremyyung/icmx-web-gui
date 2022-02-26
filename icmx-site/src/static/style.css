@@ -1,0 +1,54 @@
+/*Borders for all tables and headers*/
+table, th { border: 1px solid black; }
+
+/*Sets background for even # rows to lightgrey*/
+tr:nth-child(even) { background-color: lightgrey; }
+
+/*Hovering over any <td> element sets its background to yellow*/
+td:hover { background-color: yellow; }
+
+/*Creating a div with side-by-side panels*/
+.panels {
+  display: flex;
+  justify-content: space-between;
+}
+
+#databoard {
+  width: 400px;
+}
+
+#textboard {
+  float: left;
+  width: calc(100% - 200px);
+}
+
+#command_log {
+    width: 100%;
+    height: 40px;
+    background: #ffeb3b
+}
+
+#textbox {
+  width: 50%;
+  height: calc(100% - 300px);
+}
+
+/*Toggle background for clicked button*/
+button[value="selected"] {
+    background-color: lightblue;
+}
+
+/*Spinning loading icon*/
+#loader_wheel {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

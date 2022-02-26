@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>License Board</title>
+    <link href="static/style.css" rel="stylesheet">
+    <div id="info_div" style="white-space: pre-wrap; text-align:center">
+        <span id="title">License Board</span>
+        <span id="endpoint_url">http://192.168.1.30:8080</span> <!-- IMPORTANT: icmx-api endpoint used in calls-->
+    </div>
+</head>
+<body>
+    <div style="display:none" id="loader_wheel"></div>
+    <div id="control_panel">
+        <table id="b_container">
+            <tr id="b_row"></tr>
+        </table>
+    </div>
+    <div id="display_board" class="panels"></div>
+    <script type="module" src="{{url_for('static', filename='main.js')}}"></script>
+    <script type="module" src="{{url_for('static', filename='./modules/btnspawn.js')}}"></script>
+    <script type="module" src="{{url_for('static', filename='./modules/custlist.js')}}"></script>
+</body>
+</html>

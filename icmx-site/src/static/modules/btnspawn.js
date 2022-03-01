@@ -55,8 +55,10 @@ function getSearchFn(dom_button, script_name) {
         dom_button.value = 'selected'
         var full_call_url = api_url + "/search/" + script_name
         setUrlParam('script',script_name)
+        //**temp
         fillCustList(test_data)
         showLoader(false)
+        //**
 //        fetch(full_call_url,
 //            {
 //                "method": "GET"

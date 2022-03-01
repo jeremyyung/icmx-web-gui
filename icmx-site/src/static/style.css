@@ -2,10 +2,10 @@
 table, th { border: 1px solid black; }
 
 /*Sets background for even # rows to lightgrey*/
-tr:nth-child(even) { background-color: lightgrey; }
+/*tr:nth-child(even) { background-color: lightgrey; }*/
 
-/*Hovering over any <td> element sets its background to yellow*/
-td:hover { background-color: yellow; }
+/*Hovering over any <li> element sets its background to yellow*/
+li:hover { background-color: yellow; }
 
 /*Creating a div with side-by-side panels*/
 .panels {
@@ -13,6 +13,7 @@ td:hover { background-color: yellow; }
   justify-content: space-between;
 }
 
+/*
 #databoard {
   width: 400px;
 }
@@ -32,6 +33,7 @@ td:hover { background-color: yellow; }
   width: 50%;
   height: calc(100% - 300px);
 }
+*/
 
 /*Toggle background for clicked button*/
 button[value="selected"] {

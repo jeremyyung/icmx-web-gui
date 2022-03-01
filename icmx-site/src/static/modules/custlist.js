@@ -28,45 +28,9 @@ var test_data2 = {
 
 function fillCustList(data){
     cleanSlate()
-//    //Make table skeleton
-//    var table = document.createElement('table');
-//    table.id = "tbl_customer"
-//    var hrow = document.createElement('tr');
-//    var h1 = document.createElement('th')
-//    var h1_text = document.createTextNode("Customer")
-//    h1.appendChild(h1_text)
-//    hrow.appendChild(h1)
-//    table.appendChild(hrow)
-//
-//    //Populate table
-//    var cust_list = data['results']['data']
-//        cust_list.forEach(function(custname){
-//        var datarow = document.createElement('tr')
-//        var datacell = document.createElement('td')
-//        datacell.id = custname
-//        datacell.onclick = function() {
-//            setURLParams('customer',custname)
-//            var selected_script = getURLParam('script')
-//            var selected_customer = datacell.id
-//            var full_callurl = api_url + "/" + selected_script//#####
-//            console.log(getParamStr())
-////            fetch(api_callurl, {"method": "GET"})
-////            .then(response => response.json())
-////            .then(data => {
-////                textBox(data['stdout'][0], api_endpoint)
-////            })
-////            .catch(err => console.error(err));
-//        }
-//
-//        var datatext = document.createTextNode(custname)
-//        datacell.appendChild(datatext)
-//        datarow.appendChild(datacell)
-//        table.appendChild(datarow)
-//    })
-
     var display_div = document.getElementById('item_panel')
-    //display_div.appendChild(table)
-    popTable(display_div,data)
+    //popTable(display_div,data)
+    popTable({'pobj':display_div, 'data':data, 'append':true})
 }
 
 function cleanSlate(){
@@ -83,8 +47,9 @@ function cleanSlate(){
     })
 }
 
-function popTable(pobject, data){
-    var data_category = data['results']['data_category']
+function popTable(argdict){
+    var parent_object = argdict['pobj']
+    var data_category = argdict['data']['results']['data_category']
     var table = document.createElement('table');
     table.id = data_category
     var hrow = document.createElement('tr');
@@ -94,34 +59,38 @@ function popTable(pobject, data){
     hrow.appendChild(h1)
     table.appendChild(hrow)
 
-    var obj_list = data['results']['data']
-        obj_list.forEach(function(obj_name){
-            var datarow = document.createElement('tr')
-            var datacell = document.createElement('td')
-            var datatext = document.createTextNode(obj_name)
-            datacell.id = obj_name
-            datacell.class = data_category
-            datacell.onclick = getCellFn(data_category,obj_name)
-            datacell.appendChild(datatext)
-            datarow.appendChild(datacell)
-            table.appendChild(datarow)
-        })
-
-    pobject.appendChild(table)
+    var obj_list = argdict['data']['results']['data']
+    var c_list = document.createElement('ul')
+    obj_list.forEach(function(obj_name){
+        var listitem = document.createElement('li')
+        var textnode = document.createTextNode(obj_name)
+        listitem.id = obj_name
+        listitem.class = data_category
+        listitem.onclick = getCellFn(data_category,obj_name)
+        listitem.appendChild(textnode)
+        c_list.appendChild(listitem)
+    })
+    table.appendChild(c_list)
+    if (argdict['append']){
+        parent_object.appendChild(table)
+    }
+    else {
+        parent_object.after(table)
+    }
 }
 
 function getCellFn(data_category,obj_name){
     switch(data_category){
         case 'client_list':
-            return function(pnt_event){
-                console.log(pnt_event.path)
+            return function(pevent){
+                console.log(pevent.path)
                 //###
                 resetUrlParams()
                 var script_name = getUrlParam('script')
                 var customer = setUrlParam('customer',obj_name)
                 var full_call_url = api_url + "/search/" + getUrlParam('script') + "?" +getParamStr()
-                popTable(pnt_event.srcElement, test_data1)
-
+                popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
+//                popTable(pevent.srcElement, test_data1)
 //                fetch(full_call_url,
 //                    {
 //                        "method": "GET"

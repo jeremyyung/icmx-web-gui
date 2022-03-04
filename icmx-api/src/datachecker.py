@@ -16,7 +16,7 @@ def runExpect(cmdstr,**kwargs):
         'This server group is now empty\. +Delete the group too\?',
         'Would you like to delete group .*\?', #12
         'Would you like to delete customer .*\?',
-        '.*=.*'
+        '^[\w+-]+=.*'
     ]
     result_json = {'return_code': 0, 'data': '', 'data_category':'', 'cp_exit_code':0}
 

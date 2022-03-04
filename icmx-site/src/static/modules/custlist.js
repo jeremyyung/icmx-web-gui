@@ -1,4 +1,5 @@
 import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams } from './helpers.js';
+import { postLicInfo } from './infopanel.js'
 var api_url = document.getElementById('endpoint_url').textContent
 var test_data1 = {
 	"cmd": "./icmlt search -c ^ICM_Internal$",
@@ -27,14 +28,17 @@ var test_data2 = {
 }
 
 var test_data3 = {
-	"cmd": "./icmlt search -c ^ICM_Internal$",
+	"cmd": "./icmlt search -c ^ICM_Internal$ -g jeremy -d c7master",
 	"results": {
 		"cp_exit_code": 0,
-		"data": [
-			"Server1",
-			"Server2"
-		],
-		"data_category": "host_list",
+		"data": {
+			"expires": "2030/03/20",
+			"for": "ICM_Internal",
+			"host": "c7master",
+			"license": "29922e",
+			"users": 30
+		},
+		"data_category": "client_license",
 		"return_code": 0
 	}
 }
@@ -116,6 +120,7 @@ function getCellFn(data_category,obj_name){
             return function(pevent){
                  chainParams(pevent.srcElement.getAttribute('id_chain'))
                  console.log(fmtUrlParams())
+                 postLicInfo(test_data3)
             }
         default:
             return function(){}

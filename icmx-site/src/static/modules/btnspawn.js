@@ -1,4 +1,4 @@
-import { setUrlParam,showLoader } from './helpers.js';
+import { setUrlParam,showLoader,resetUrlParams } from './helpers.js';
 import { fillCustList } from './custlist.js';
 var api_url = document.getElementById('endpoint_url').textContent
 var test_data = {
@@ -54,6 +54,7 @@ function getSearchFn(dom_button, script_name) {
         })
         dom_button.value = 'selected'
         var full_call_url = api_url + "/search/" + script_name
+        resetUrlParams()
         setUrlParam('script',script_name)
         //**temp
         fillCustList(test_data)

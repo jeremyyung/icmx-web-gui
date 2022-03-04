@@ -1,4 +1,4 @@
-import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams } from './helpers.js';
+import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams } from './helpers.js';
 var api_url = document.getElementById('endpoint_url').textContent
 var test_data1 = {
 	"cmd": "./icmlt search -c ^ICM_Internal$",
@@ -26,25 +26,24 @@ var test_data2 = {
 	}
 }
 
+var test_data3 = {
+	"cmd": "./icmlt search -c ^ICM_Internal$",
+	"results": {
+		"cp_exit_code": 0,
+		"data": [
+			"Server1",
+			"Server2"
+		],
+		"data_category": "host_list",
+		"return_code": 0
+	}
+}
+
 function fillCustList(data){
-    cleanSlate()
+    wipeDisplay({div_id_list:['item_panel', 'info_panel', 'action_panel']})
     var display_div = document.getElementById('item_panel')
     //popTable(display_div,data)
     popTable({'pobj':display_div, 'data':data, 'append':true})
-}
-
-function cleanSlate(){
-    var display_board = document.getElementById('display_board')
-    const item_list = ['item_panel', 'info_panel', 'action_panel']
-    item_list.forEach(function(item){
-        var checker = document.getElementById(item)
-        if (checker != null) {
-            checker.remove()
-        }
-        var item_panel = document.createElement('div')
-        item_panel.id = item
-        display_board.appendChild(item_panel)
-    })
 }
 
 function popTable(argdict){
@@ -55,6 +54,7 @@ function popTable(argdict){
     var hrow = document.createElement('tr');
     var h1 = document.createElement('th')
     var h1_text = document.createTextNode(data_category)
+    deleteObj(table.id)
     h1.appendChild(h1_text)
     hrow.appendChild(h1)
     table.appendChild(hrow)
@@ -66,6 +66,8 @@ function popTable(argdict){
         var textnode = document.createTextNode(obj_name)
         listitem.id = obj_name
         listitem.class = data_category
+        var p_chain = parent_object.getAttribute('id_chain')
+        listitem.setAttribute('id_chain', fmtIdChain(p_chain,data_category,obj_name))
         listitem.onclick = getCellFn(data_category,obj_name)
         listitem.appendChild(textnode)
         c_list.appendChild(listitem)
@@ -83,14 +85,11 @@ function getCellFn(data_category,obj_name){
     switch(data_category){
         case 'client_list':
             return function(pevent){
-                console.log(pevent.path)
                 //###
                 resetUrlParams()
-                var script_name = getUrlParam('script')
-                var customer = setUrlParam('customer',obj_name)
-                var full_call_url = api_url + "/search/" + getUrlParam('script') + "?" +getParamStr()
+                chainParams(pevent.srcElement.getAttribute('id_chain'))
+                var full_call_url = api_url + "/search/" + fmtUrlParams()
                 popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
-//                popTable(pevent.srcElement, test_data1)
 //                fetch(full_call_url,
 //                    {
 //                        "method": "GET"
@@ -107,16 +106,32 @@ function getCellFn(data_category,obj_name){
                 //###
             }
         case 'group_list':
-            return function(){
-                console.log('group ' + obj_name)
+            return function(pevent){
+                resetUrlParams()
+                chainParams(pevent.srcElement.getAttribute('id_chain'))
+                popTable({'pobj':pevent.srcElement, 'data':test_data2, 'append':false})
+                console.log(fmtUrlParams())
             }
         case 'host_list':
-            return function(){
-                console.log('host ' + obj_name)
+            return function(pevent){
+                 chainParams(pevent.srcElement.getAttribute('id_chain'))
+                 console.log(fmtUrlParams())
             }
         default:
             return function(){}
     }
 }
 
+function fmtIdChain(parent_id_chain,data_category,obj_name){
+    switch(data_category){
+        case 'client_list':
+            return "customer=" + obj_name
+        case 'group_list':
+            return parent_id_chain + "&group=" + obj_name
+        case 'host_list':
+            return parent_id_chain + "&host=" + obj_name
+        default:
+            return ""
+    }
+}
 export { fillCustList }

@@ -1,4 +1,4 @@
-import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams } from './helpers.js';
+import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams } from './helpers.js'
 import { postLicInfo } from './infopanel.js'
 var api_url = document.getElementById('endpoint_url').textContent
 var test_data1 = {
@@ -46,7 +46,6 @@ var test_data3 = {
 function fillCustList(data){
     wipeDisplay({div_id_list:['item_panel', 'info_panel', 'action_panel']})
     var display_div = document.getElementById('item_panel')
-    //popTable(display_div,data)
     popTable({'pobj':display_div, 'data':data, 'append':true})
 }
 
@@ -93,7 +92,9 @@ function getCellFn(data_category,obj_name){
                 resetUrlParams()
                 chainParams(pevent.srcElement.getAttribute('id_chain'))
                 var full_call_url = api_url + "/search/" + fmtUrlParams()
+                console.log(full_call_url)
                 popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
+                deleteObj('lic_form')
 //                fetch(full_call_url,
 //                    {
 //                        "method": "GET"
@@ -113,14 +114,19 @@ function getCellFn(data_category,obj_name){
             return function(pevent){
                 resetUrlParams()
                 chainParams(pevent.srcElement.getAttribute('id_chain'))
+                var full_call_url = api_url + "/search/" + fmtUrlParams()
+                console.log(full_call_url)
                 popTable({'pobj':pevent.srcElement, 'data':test_data2, 'append':false})
-                console.log(fmtUrlParams())
+                deleteObj('lic_form')
             }
         case 'host_list':
             return function(pevent){
-                 chainParams(pevent.srcElement.getAttribute('id_chain'))
-                 console.log(fmtUrlParams())
-                 postLicInfo(test_data3)
+                deleteObj('lic_form')
+                resetUrlParams()
+                chainParams(pevent.srcElement.getAttribute('id_chain'))
+                var full_call_url = api_url + "/search/" + fmtUrlParams()
+                console.log(full_call_url)
+                postLicInfo(test_data3)
             }
         default:
             return function(){}

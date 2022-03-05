@@ -43,8 +43,8 @@ function showLoader(doshow){ //Toggles loading div visibility
     }
 }
 
-function deleteObj(t_obj_id){
-    var checker = document.getElementById(t_obj_id)
+function deleteObj(tar_obj_id){
+    var checker = document.getElementById(tar_obj_id)
     if (checker != null) {
         checker.remove()
     }

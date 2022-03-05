@@ -1,5 +1,6 @@
 /*Borders for all tables and headers*/
 table, th { border: 1px solid black; }
+form {border: 3px solid; padding: 7px}
 
 /*Sets background for even # rows to lightgrey*/
 /*tr:nth-child(even) { background-color: lightgrey; }*/
@@ -9,8 +10,12 @@ li:hover { background-color: yellow; }
 
 /*Creating a div with side-by-side panels*/
 .panels {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
+}
+
+input{
+  display: block;
 }
 
 /*

@@ -11,13 +11,16 @@
     <div id="log_div"></div>
 </head>
 <body>
-    <div style="display:none" id="loader_wheel"></div>
+    <div style="display:none" id="loading_overlay">
+        <div id="loading_text">LOADING...</div>
+    </div>
     <div id="control_panel">
         <table id="b_container">
             <tr id="b_row"></tr>
         </table>
     </div>
     <div id="display_board" class="panels"></div>
+
     <script type="module" src="{{url_for('static', filename='main.js')}}"></script>
     <script type="module" src="{{url_for('static', filename='./modules/btnspawn.js')}}"></script>
     <script type="module" src="{{url_for('static', filename='./modules/custlist.js')}}"></script>

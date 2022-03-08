@@ -34,7 +34,7 @@ function resetUrlParams(){
 }
 
 function showLoader(doshow){ //Toggles loading div visibility
-    var loader_element = document.getElementById('loader_wheel')
+    var loader_element = document.getElementById('loading_overlay')
     if (doshow) {
         loader_element.style.display = 'block'
     }

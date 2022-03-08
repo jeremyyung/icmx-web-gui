@@ -1,6 +1,6 @@
 /*Borders for all tables and headers*/
 table, th { border: 1px solid black; }
-form {border: 3px solid; padding: 7px}
+form { border: 3px solid; padding: 7px; }
 
 /*Sets background for even # rows to lightgrey*/
 /*tr:nth-child(even) { background-color: lightgrey; }*/
@@ -36,7 +36,6 @@ input{
 }
 */
 
-/*Command Log*/
 #command_log {
     width: 100%;
     height: 40px;
@@ -48,14 +47,20 @@ button[value="selected"] {
     background-color: lightblue;
 }
 
-/*Spinning loading icon*/
-#loader_wheel {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 2s linear infinite;
+#loading_overlay {
+  background-color: rgba(0,0,0,0.5);
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+#loading_text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
 }
 
 @keyframes spin {

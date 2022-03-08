@@ -9,7 +9,7 @@ def runExpect(cmdstr,**kwargs):
         'Server Group \(\"q\" to quit\)\:', #4
         'Server Hostname \(\"q\" to quit\)\:',
         'Would you like to send these licenses to the customer\?',
-        '\w+-\w+-\w+-\w+-\w+',
+        '^\w+-\w+-\w+-\w+-\w+',
         'Customer .* already has server groups. +Do you mean to create another\? +\[y\/N\]',  # 8
         'None found',
         'Customer .* does not yet exist. +Create it\? +\[y\/N\]\:',

@@ -1,5 +1,7 @@
 import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams } from './helpers.js'
 import { postLicInfo } from './infopanel.js'
+import { updateCmdLog } from './cmdlog.js'
+
 var api_url = document.getElementById('endpoint_url').textContent
 var test_data1 = {
 	"cmd": "./icmlt search -c ^ICM_Internal$",
@@ -15,7 +17,7 @@ var test_data1 = {
 	}
 }
 var test_data2 = {
-	"cmd": "./icmlt search -c ^ICM_Internal$",
+	"cmd": "./icmlt search -c ^ICM_Internal$ -g Jeremy",
 	"results": {
 		"cp_exit_code": 0,
 		"data": [
@@ -87,49 +89,78 @@ function popTable(argdict){
 function getCellFn(data_category,obj_name){
     switch(data_category){
         case 'client_list':
-            return function(pevent){
-                //###
-                resetUrlParams()
-                chainParams(pevent.srcElement.getAttribute('id_chain'))
-                var full_call_url = api_url + "/search/" + fmtUrlParams()
-                console.log(full_call_url)
-                popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
-                deleteObj('lic_form')
-//                fetch(full_call_url,
-//                    {
-//                        "method": "GET"
-//                    })
-//                .then(response => response.json())
-//                .then(data => {
-//                    fillCustList(data)
-//                    showLoader(false)
-//                })
-//                .catch(err => {
-//                    console.error(err)
-//                    showLoader(false)
-//                })
-                //###
-            }
         case 'group_list':
             return function(pevent){
+                showLoader(true)
                 resetUrlParams()
                 chainParams(pevent.srcElement.getAttribute('id_chain'))
                 var full_call_url = api_url + "/search/" + fmtUrlParams()
-                console.log(full_call_url)
-                popTable({'pobj':pevent.srcElement, 'data':test_data2, 'append':false})
-                deleteObj('lic_form')
+
+                //**temp
+//                console.log(full_call_url)
+//                if (data_category == 'client_list'){
+//                    popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
+//                    updateCmdLog(test_data1)
+//                }
+//                else{
+//                    popTable({'pobj':pevent.srcElement, 'data':test_data2, 'append':false})
+//                    updateCmdLog(test_data2)
+//                }
+//                deleteObj('lic_form')
+                //**
+
+                fetch(full_call_url,
+                    {
+                        "method": "GET"
+                    })
+                .then(response => response.json())
+                .then(data => {
+                    deleteObj('lic_form')
+                    if(data['results']['data_category'] == 'client_license'){
+                        postLicInfo(data)
+                        setUrlParam('host', data['results']['data']['host'])
+                    }
+                    else{
+                        popTable({'pobj':pevent.srcElement, 'data':data, 'append':false})
+                    }
+                    updateCmdLog(data)
+                    showLoader(false)
+                })
+                .catch(err => {
+                    alert(err)
+                    showLoader(false)
+                })
             }
         case 'host_list':
             return function(pevent){
-                deleteObj('lic_form')
+                showLoader(true)
                 resetUrlParams()
                 chainParams(pevent.srcElement.getAttribute('id_chain'))
                 var full_call_url = api_url + "/search/" + fmtUrlParams()
-                console.log(full_call_url)
-                postLicInfo(test_data3)
+
+                //**temp
+//                console.log(full_call_url)
+//                postLicInfo(test_data3)
+//                updateCmdLog(test_data3)
+                //**
+
+                fetch(full_call_url,
+                    {
+                        "method": "GET"
+                    })
+                .then(response => response.json())
+                .then(data => {
+                    postLicInfo(data)
+                    updateCmdLog(data)
+                    showLoader(false)
+                })
+                .catch(err => {
+                    alert(err)
+                    showLoader(false)
+                })
             }
         default:
-            return function(){}
+            return function(){ alert("Error assigning cell function.")}
     }
 }
 
@@ -145,4 +176,5 @@ function fmtIdChain(parent_id_chain,data_category,obj_name){
             return ""
     }
 }
+
 export { fillCustList }

@@ -28,17 +28,20 @@ input{
   width: calc(100% - 200px);
 }
 
-#command_log {
-    width: 100%;
-    height: 40px;
-    background: #ffeb3b
-}
+
 
 #textbox {
   width: 50%;
   height: calc(100% - 300px);
 }
 */
+
+/*Command Log*/
+#command_log {
+    width: 100%;
+    height: 40px;
+    background: beige
+}
 
 /*Toggle background for clicked button*/
 button[value="selected"] {

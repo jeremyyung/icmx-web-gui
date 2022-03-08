@@ -118,7 +118,17 @@ function getCellFn(data_category,obj_name){
                     deleteObj('lic_form')
                     if(data['results']['data_category'] == 'client_license'){
                         postLicInfo(data)
-                        setUrlParam('host', data['results']['data']['host'])
+
+                        var selected_host = data['results']['data']['host']
+                        if (selected_host == null) {
+                            var selected_host = data['results']['data']['Hostname']
+                        }
+                        setUrlParam('host', selected_host)
+
+                        var selected_group = data['results']['data']['Group:']
+                        if (selected_group != null){
+                            setUrlParam('group', selected_group)
+                        }
                     }
                     else{
                         popTable({'pobj':pevent.srcElement, 'data':data, 'append':false})

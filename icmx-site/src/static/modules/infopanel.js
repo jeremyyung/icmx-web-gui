@@ -10,7 +10,7 @@ function postLicInfo(data){
     var licdata = data['results']['data']
     for (var key in licdata){
         var label = document.createElement('label')
-        label.innerHTML = key + ":"
+        label.innerHTML = key
         var dinput = document.createElement('input')
         dinput.type = 'text'
         dinput.name = key

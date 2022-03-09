@@ -91,10 +91,13 @@ def argsToFlags(req_args):
     return param_str
 
 def dataToFlags(data, param_str):
-    if "expiration" in data.keys():
-        param_str = param_str + " -e %s" % data['expiration']
-    if "users" in data.keys():
-        param_str = param_str + " -u %s" % data['users']
+    data_keys = data.keys()
+    for exp_label in ['expiration','expires','Expiration']: #Different field name for GDP/GDPXL
+        if exp_label in data_keys:
+            param_str = param_str + " -e %s" % data[exp_label]
+    for usr_label in ['users', 'Users']:
+        if usr_label in data_keys:
+            param_str = param_str + " -u %s" % data[usr_label]
     if "property_value" in data.keys():
         param_str = param_str + " -l \'%s\'" % data['property_value']
     if "administrators" in data.keys():

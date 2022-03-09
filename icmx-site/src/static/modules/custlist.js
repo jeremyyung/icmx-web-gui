@@ -97,50 +97,49 @@ function getCellFn(data_category,obj_name){
                 var full_call_url = api_url + "/search/" + fmtUrlParams()
 
                 //**temp
-                console.log(full_call_url)
-                if (data_category == 'client_list'){
-                    popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
-                    updateCmdLog(test_data1)
-                }
-                else{
-                    popTable({'pobj':pevent.srcElement, 'data':test_data2, 'append':false})
-                    updateCmdLog(test_data2)
-                }
-                deleteObj('lic_form')
-                showLoader(false)
+//                console.log(full_call_url)
+//                if (data_category == 'client_list'){
+//                    popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
+//                    updateCmdLog(test_data1)
+//                }
+//                else{
+//                    popTable({'pobj':pevent.srcElement, 'data':test_data2, 'append':false})
+//                    updateCmdLog(test_data2)
+//                }
+//                deleteObj('lic_form')
+//                showLoader(false)
                 //**
 
-//                fetch(full_call_url,
-//                    {
-//                        "method": "GET"
-//                    })
-//                .then(response => response.json())
-//                .then(data => {
-//                    deleteObj('lic_form')
-//                    if(data['results']['data_category'] == 'client_license'){
-//                        postLicInfo(data)
-//
-//                        var selected_host = data['results']['data']['host']
-//                        if (selected_host == null) {
-//                            var selected_host = data['results']['data']['Hostname']
-//                        }
-//                        setUrlParam('host', selected_host)
-//
-//                        var selected_group = data['results']['data']['Group:']
-//                        if (selected_group != null){
-//                            setUrlParam('group', selected_group)
-//                        }
-//                    }
-//                    else{
-//                        popTable({'pobj':pevent.srcElement, 'data':data, 'append':false})
-//                    }
-//                    updateCmdLog(data)
-//                    showLoader(false)
-//                })
-//                .catch(err => {
-//                    alert(err)
-//                    showLoader(false)
-//                })
+                fetch(full_call_url,
+                    {
+                        "method": "GET"
+                    })
+                .then(response => response.json())
+                .then(data => {
+                    deleteObj('lic_form')
+                    if(data['results']['data_category'] == 'client_license'){
+                        postLicInfo(data)
+
+                        var selected_host = data['results']['data']['host']
+                        if (selected_host == null) {
+                            var selected_host = data['results']['data']['Hostname']
+                        }
+                        setUrlParam('host', selected_host)
+
+                        var selected_group = data['results']['data']['Group:']
+                        if (selected_group != null){
+                            setUrlParam('group', selected_group)
+                        }
+                    }
+                    else{
+                        popTable({'pobj':pevent.srcElement, 'data':data, 'append':false})
+                    }
+                    updateCmdLog(data)
+                    showLoader(false)
+                })
+                .catch(err => {
+                    alert(err)
+                })
             }
         case 'host_list':
             return function(pevent){
@@ -150,26 +149,26 @@ function getCellFn(data_category,obj_name){
                 var full_call_url = api_url + "/search/" + fmtUrlParams()
 
                 //**temp
-                console.log(full_call_url)
-                postLicInfo(test_data3)
-                updateCmdLog(test_data3)
-                showLoader(false)
+//                console.log(full_call_url)
+//                postLicInfo(test_data3)
+//                updateCmdLog(test_data3)
+//                showLoader(false)
                 //**
 
-//                fetch(full_call_url,
-//                    {
-//                        "method": "GET"
-//                    })
-//                .then(response => response.json())
-//                .then(data => {
-//                    postLicInfo(data)
-//                    updateCmdLog(data)
-//                    showLoader(false)
-//                })
-//                .catch(err => {
-//                    alert(err)
-//                    showLoader(false)
-//                })
+                fetch(full_call_url,
+                    {
+                        "method": "GET"
+                    })
+                .then(response => response.json())
+                .then(data => {
+                    postLicInfo(data)
+                    updateCmdLog(data)
+                    showLoader(false)
+                })
+                .catch(err => {
+                    alert(err)
+                    showLoader(false)
+                })
             }
         default:
             return function(){ alert("Error assigning cell function.")}

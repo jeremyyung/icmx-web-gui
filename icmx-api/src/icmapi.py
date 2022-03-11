@@ -78,10 +78,7 @@ def fmtOutput(cmd="", result=None):
 def argsToFlags(req_args):
     param_str = ""
     if "customer" in req_args.keys():
-        if "noregex" in req_args.keys():
-            param_str = "-c %s" % req_args['customer']
-        else:
-            param_str = "-c ^%s$" % req_args['customer']
+        param_str = "-c %s" % req_args['customer']
     if "group" in req_args.keys():
         param_str = param_str + " -g %s" % req_args['group']
     if "host" in req_args.keys():

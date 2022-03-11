@@ -4,10 +4,10 @@ var api_url = document.getElementById('endpoint_url').textContent
 
 function postLicInfo(data){
     deleteObj('lic_form')
+    deleteObj('prop_form')
     var ipanel = document.getElementById('info_panel')
     var lic_form = document.createElement('form')
     lic_form.id = 'lic_form'
-    //###
     lic_form.onsubmit = function(pevent) {
         var submit_action = pevent.submitter.value
         submitAction(submit_action)
@@ -47,7 +47,6 @@ function postLicInfo(data){
         submit_btn.style = 'display:inline'
         lic_form.appendChild(submit_btn)
     }
-    //###
 }
 
 function submitAction(submit_action){
@@ -78,20 +77,5 @@ function submitAction(submit_action){
             break
     }
 }
-
-//function sendPost(callurl, payload_json){
-//    showLoader(true)
-//    fetch(callurl, {
-//        "method": "POST",
-//        "headers": { 'Content-Type':'application/json'},
-//        "body": JSON.stringify(payload_json)
-//    })
-//    .then(response => response.json())
-//    .then(data => {
-//        updateCmdLog(data)
-//        showLoader(false)
-//    })
-//    .catch(err => alert(err));
-//}
 
 export { postLicInfo }

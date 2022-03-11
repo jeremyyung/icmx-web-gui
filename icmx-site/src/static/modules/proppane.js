@@ -38,7 +38,7 @@ async function getPropVals() {
 }
 
 function fetchProp(tprop){
-    var full_call_url = api_url + '/propval' + fmtUrlParams(false) + '&propval=' + tprop + "&noregex"
+    var full_call_url = api_url + '/propval' + fmtUrlParams(false,['host']) + '&propval=' + tprop
     return fetch(full_call_url,
         {
             "method": "GET"
@@ -67,43 +67,3 @@ function addPropField(data, tprop) {
 }
 
 export { setPropPane }
-
-
-
-
-
-
-
-
-
-
-
-
-//    var target_propvals = ['Uuid', 'Quotas']
-//    for (var index in target_propvals) {
-//        var prop_name = target_propvals[index]
-//        var full_call_url = api_url + '/propval' + fmtUrlParams(false) + '&propval=' + prop_name
-//        fetch(full_call_url,
-//            {
-//                "method": "GET"
-//            })
-//        .then(response => response.json())
-//        .then(data => {
-//            updateCmdLog(data)
-//            var returned_value = data['results']['data']
-//            var label = document.createElement('label')
-//            label.innerHTML = prop_name
-//            var dinput = document.createElement('input')
-//            dinput.type = 'text'
-//            dinput.name = prop_name
-//            dinput.id = prop_name
-//            dinput.value = returned_value
-//            prop_form.appendChild(label)
-//            prop_form.appendChild(dinput)
-//        })
-//        .catch(err => {
-//            alert(err)
-//        })
-//    }
-//
-

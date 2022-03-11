@@ -77,7 +77,6 @@ function getSearchFn(dom_button, script_name) {
         })
         .catch(err => {
             alert(err)
-            updateCmdLog(data)
             showLoader(false)
         })
     }

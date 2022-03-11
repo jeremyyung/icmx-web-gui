@@ -16,16 +16,28 @@ function setUrlParam(key,value){ //Sets search params in URL
     history.replaceState(null,null,currenturl)
 }
 
-function fmtUrlParams(showscript=true){
+function fmtUrlParams(showscript=true,noregx_list=[]){
     var currenturl = new URL(window.location.href)
-    var param_string = currenturl.searchParams.toString()
-    if(showscript){
-        param_string = param_string.replace('script=','')
-    }
-    else {
-        param_string = param_string.replace(/script=\w+/g,'')
-    }
-    param_string = param_string.replace('&','?')
+    var param_string = ''
+    currenturl.searchParams.forEach(function(value,key){
+        var true_param = ''
+        if (key == 'script'){
+            if(showscript){
+                param_string = value + "?"
+            }
+            else {
+                param_string = "?"
+            }
+            return;
+        }
+        else if (noregx_list.includes(key)){
+            true_param = key + "=" + value + "&"
+        }
+        else{
+            true_param = key + "=" + "^" + value + "$&"
+        }
+        param_string = param_string + true_param
+    })
     return param_string
 }
 

@@ -16,10 +16,15 @@ function setUrlParam(key,value){ //Sets search params in URL
     history.replaceState(null,null,currenturl)
 }
 
-function fmtUrlParams(){
+function fmtUrlParams(showscript=true){
     var currenturl = new URL(window.location.href)
     var param_string = currenturl.searchParams.toString()
-    param_string = param_string.replace('script=','')
+    if(showscript){
+        param_string = param_string.replace('script=','')
+    }
+    else {
+        param_string = param_string.replace(/script=\w+/g,'')
+    }
     param_string = param_string.replace('&','?')
     return param_string
 }
@@ -74,4 +79,19 @@ function chainParams(idchain){
     })
 }
 
-export { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams }
+function sendPost(callurl, payload_json){
+    showLoader(true)
+    fetch(callurl, {
+        "method": "POST",
+        "headers": { 'Content-Type':'application/json'},
+        "body": JSON.stringify(payload_json)
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateCmdLog(data)
+        showLoader(false)
+    })
+    .catch(err => alert(err));
+}
+
+export { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost }

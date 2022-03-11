@@ -1,4 +1,5 @@
-import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams } from './helpers.js'
+import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost } from './helpers.js'
+import { setPropPane } from './proppane.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
 function postLicInfo(data){
@@ -38,7 +39,7 @@ function postLicInfo(data){
     }
     ipanel.appendChild(lic_form)
 
-    var form_btn_list = ['Submit', 'Notify']
+    var form_btn_list = ['Renew', 'Notify', 'Propvals']
     for (var btn_name in form_btn_list) {
         var submit_btn = document.createElement('input')
         submit_btn.type = 'submit'
@@ -55,7 +56,7 @@ function submitAction(submit_action){
             var fullurl = api_url + "/notify/" + fmtUrlParams()
             sendPost(fullurl,{})
             break
-        case 'Submit':
+        case 'Renew':
             var fullurl = api_url + "/renew/" + fmtUrlParams()
             var payload_json = {}
             var target_fields = ['expires','Expiration','Users','users']
@@ -67,24 +68,30 @@ function submitAction(submit_action){
             })
             sendPost(fullurl,payload_json)
             break
+         case 'Propvals'://Generate UUID & Quotas editing pane
+            if(getUrlParam('script') == 'icmgdpxlt') {
+                setPropPane()
+            }
+            else {
+                alert("Only used for GDPXL licenses.")
+            }
+            break
     }
 }
 
-function sendPost(callurl, payload_json){
-    console.log(callurl)
-    console.log(payload_json)
-    showLoader(true)
-    fetch(callurl, {
-        "method": "POST",
-        "headers": { 'Content-Type':'application/json'},
-        "body": JSON.stringify(payload_json)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        showLoader(false)
-    })
-    .catch(err => alert(err));
-}
+//function sendPost(callurl, payload_json){
+//    showLoader(true)
+//    fetch(callurl, {
+//        "method": "POST",
+//        "headers": { 'Content-Type':'application/json'},
+//        "body": JSON.stringify(payload_json)
+//    })
+//    .then(response => response.json())
+//    .then(data => {
+//        updateCmdLog(data)
+//        showLoader(false)
+//    })
+//    .catch(err => alert(err));
+//}
 
 export { postLicInfo }

@@ -1,3 +1,5 @@
+import { updateCmdLog } from './cmdlog.js'
+
 function getParamStr(){//Get all params except for 'script'
     var currenturl = new URL(window.location.href)
     var params = new URLSearchParams(currenturl.search);

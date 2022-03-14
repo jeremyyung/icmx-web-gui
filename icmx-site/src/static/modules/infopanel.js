@@ -15,31 +15,37 @@ function postLicInfo(data){
     }
 
     var licdata = data['results']['data']
-    for (var key in licdata){
-        var label = document.createElement('label')
-        label.innerHTML = key
-        var dinput = document.createElement('input')
-        dinput.type = 'text'
-        dinput.name = key
-        dinput.id = key
-        dinput.readOnly = true
-        dinput.value = licdata[key]
-        if(dinput.name == 'expires' || dinput.name == 'Expiration' || dinput.name == 'Users' || dinput.name == 'users') {
-            dinput.readOnly = false
-            if(dinput.name == 'Users' || dinput.name == 'users'){
-                dinput.type = 'number'
-            }
-            if(dinput.name == 'expires' || dinput.name == 'Expiration'){
-                dinput.pattern = "[0-9]{4}/[0-9]{2}/[0-9]{2}"
-                dinput.title = "YYYY/MM/DD"
-            }
-        }
-        lic_form.appendChild(label)
-        lic_form.appendChild(dinput)
+    if(data['results']['data_category'] != 'client_license'){
+        alert(licdata)
+        var form_btn_list = ['Propvals']
     }
-    ipanel.appendChild(lic_form)
+    else {
+        for (var key in licdata){
+            var label = document.createElement('label')
+            label.innerHTML = key
+            var dinput = document.createElement('input')
+            dinput.type = 'text'
+            dinput.name = key
+            dinput.id = key
+            dinput.readOnly = true
+            dinput.value = licdata[key]
+            if(dinput.name == 'expires' || dinput.name == 'Expiration' || dinput.name == 'Users' || dinput.name == 'users') {
+                dinput.readOnly = false
+                if(dinput.name == 'Users' || dinput.name == 'users'){
+                    dinput.type = 'number'
+                }
+                if(dinput.name == 'expires' || dinput.name == 'Expiration'){
+                    dinput.pattern = "[0-9]{4}/[0-9]{2}/[0-9]{2}"
+                    dinput.title = "YYYY/MM/DD"
+                }
+            }
+            lic_form.appendChild(label)
+            lic_form.appendChild(dinput)
+        }
+        var form_btn_list = ['Renew', 'Notify', 'Propvals']
+    }
 
-    var form_btn_list = ['Renew', 'Notify', 'Propvals']
+    ipanel.appendChild(lic_form)
     for (var btn_name in form_btn_list) {
         var submit_btn = document.createElement('input')
         submit_btn.type = 'submit'

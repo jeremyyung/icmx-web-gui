@@ -18,6 +18,14 @@ input{
   display: block;
 }
 
+input[type=text].changed{
+  border: 3px solid red;
+}
+
+input[type=text]:read-write, input[type=number]:read-write{
+  border: 3px solid lime;
+}
+
 /*
 #databoard {
   width: 400px;

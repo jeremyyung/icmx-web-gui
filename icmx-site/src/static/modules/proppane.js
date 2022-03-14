@@ -8,12 +8,23 @@ function setPropPane(){
     var prop_form = document.createElement('form')
     prop_form.id = 'prop_form'
 
-    //###
-/*    lic_form.onsubmit = function(pevent) {
-        var submit_action = pevent.submitter.value
-        submitAction(submit_action)
+    //###Search for all inputs with "changed" class, submit the appropriate propval update commands
+    prop_form.onsubmit = function(pevent) {
+        try {
+            var mod_inputs = document.querySelectorAll('input[type=text].changed')
+            mod_inputs.forEach(function(ele){
+                var propval_type = ele.id
+                var full_call_url = api_url + "/propval" + fmtUrlParams(false,['host']) + "&propval=" + propval_type
+                var post_json = {'property_value':ele.value}
+                sendPost(full_call_url, post_json)
+            })
+        }
+        catch (err){
+            console.log(err)
+            return false
+        }
         return false
-    }*/
+    }
     getPropVals()
     license_form.after(prop_form)
 }
@@ -62,8 +73,14 @@ function addPropField(data, tprop) {
     dinput.name = tprop
     dinput.id = tprop
     dinput.value = data['results']['data']
+    dinput.addEventListener('input',hasChanged)
     prop_form_obj.appendChild(label)
     prop_form_obj.appendChild(dinput)
+}
+
+function hasChanged(pevent){
+    var changed_obj = pevent.srcElement
+    changed_obj.className = "changed"
 }
 
 export { setPropPane }

@@ -108,4 +108,23 @@ function sendPost(callurl, payload_json){
     .catch(err => alert(err));
 }
 
-export { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost }
+async function sendGet(callurl){
+    showLoader(true)
+    const response = await fetch(callurl,
+    {
+       "method": "GET"
+    })
+
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`
+        showLoader(false)
+        throw new Error(message)
+    }
+
+    const data = await response.json()
+    updateCmdLog(data)
+    showLoader(false)
+    return data
+}
+
+export { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost,sendGet }

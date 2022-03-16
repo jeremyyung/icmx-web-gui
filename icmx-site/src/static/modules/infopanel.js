@@ -73,7 +73,7 @@ function submitAction(submit_action){
             })
             sendPost(fullurl,payload_json)
             break
-         case 'Propvals'://Generate UUID & Quotas editing pane
+        case 'Propvals'://Generate UUID & Quotas editing pane
             if(getUrlParam('script') == 'icmgdpxlt') {
                 setPropPane()
             }

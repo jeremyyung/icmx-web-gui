@@ -1,49 +1,8 @@
-import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams } from './helpers.js'
+import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendGet } from './helpers.js'
 import { postLicInfo } from './infopanel.js'
 import { updateCmdLog } from './cmdlog.js'
 
 var api_url = document.getElementById('endpoint_url').textContent
-var test_data1 = {
-	"cmd": "./icmlt search -c ^ICM_Internal$",
-	"results": {
-		"cp_exit_code": 0,
-		"data": [
-			"Alex",
-			"Bernie",
-			"SamsungAE"
-		],
-		"data_category": "group_list",
-		"return_code": 0
-	}
-}
-var test_data2 = {
-	"cmd": "./icmlt search -c ^ICM_Internal$ -g Jeremy",
-	"results": {
-		"cp_exit_code": 0,
-		"data": [
-			"Server1",
-			"Server2"
-		],
-		"data_category": "host_list",
-		"return_code": 0
-	}
-}
-
-var test_data3 = {
-	"cmd": "./icmlt search -c ^ICM_Internal$ -g jeremy -d c7master",
-	"results": {
-		"cp_exit_code": 0,
-		"data": {
-			"expires": "2030/03/20",
-			"for": "ICM_Internal",
-			"host": "c7master",
-			"license": "29922e",
-			"users": 30
-		},
-		"data_category": "client_license",
-		"return_code": 0
-	}
-}
 
 function fillCustList(data){
     wipeDisplay({div_id_list:['item_panel', 'info_panel', 'action_panel']})
@@ -91,35 +50,16 @@ function getCellFn(data_category,obj_name){
         case 'client_list':
         case 'group_list':
             return function(pevent){
-                showLoader(true)
                 resetUrlParams()
                 chainParams(pevent.srcElement.getAttribute('id_chain'))
                 var full_call_url = api_url + "/search/" + fmtUrlParams()
-
-                //**temp
-//                console.log(full_call_url)
-//                if (data_category == 'client_list'){
-//                    popTable({'pobj':pevent.srcElement, 'data':test_data1, 'append':false})
-//                    updateCmdLog(test_data1)
-//                }
-//                else{
-//                    popTable({'pobj':pevent.srcElement, 'data':test_data2, 'append':false})
-//                    updateCmdLog(test_data2)
-//                }
-//                deleteObj('lic_form')
-//                showLoader(false)
-                //**
-
-                fetch(full_call_url,
-                    {
-                        "method": "GET"
-                    })
-                .then(response => response.json())
+                sendGet(full_call_url)
                 .then(data => {
                     deleteObj('lic_form')
                     if(data['results']['data_category'] == 'client_license'){
+                        //If a license is returned, show the license info
                         postLicInfo(data)
-
+                        //GDP & GDPXL use different category names, ensures the url params are set correctly.
                         var selected_host = data['results']['data']['host']
                         if (selected_host == null) {
                             var selected_host = data['results']['data']['Hostname']
@@ -132,43 +72,22 @@ function getCellFn(data_category,obj_name){
                         }
                     }
                     else{
+                        //If a group list is returned, populate sub-table
                         popTable({'pobj':pevent.srcElement, 'data':data, 'append':false})
                     }
-                    updateCmdLog(data)
-                    showLoader(false)
                 })
-                .catch(err => {
-                    alert(err)
-                })
+                .catch(error => {alert(error)})
             }
         case 'host_list':
             return function(pevent){
-                showLoader(true)
                 resetUrlParams()
                 chainParams(pevent.srcElement.getAttribute('id_chain'))
                 var full_call_url = api_url + "/search/" + fmtUrlParams()
-
-                //**temp
-//                console.log(full_call_url)
-//                postLicInfo(test_data3)
-//                updateCmdLog(test_data3)
-//                showLoader(false)
-                //**
-
-                fetch(full_call_url,
-                    {
-                        "method": "GET"
-                    })
-                .then(response => response.json())
+                sendGet(full_call_url)
                 .then(data => {
                     postLicInfo(data)
-                    updateCmdLog(data)
-                    showLoader(false)
                 })
-                .catch(err => {
-                    alert(err)
-                    showLoader(false)
-                })
+                .catch(error => {alert(error)})
             }
         default:
             return function(){ alert("Error assigning cell function.")}

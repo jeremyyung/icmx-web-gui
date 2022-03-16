@@ -1,4 +1,4 @@
-import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost } from './helpers.js'
+import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost,sendGet } from './helpers.js'
 import { updateCmdLog } from './cmdlog.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
@@ -50,18 +50,11 @@ async function getPropVals() {
 
 function fetchProp(tprop){
     var full_call_url = api_url + '/propval' + fmtUrlParams(false,['host']) + '&propval=' + tprop
-    return fetch(full_call_url,
-        {
-            "method": "GET"
-        })
-    .then(response => response.json())
+    return sendGet(full_call_url)
     .then(data => {
-        updateCmdLog(data)
         addPropField(data, tprop)
     })
-    .catch(err => {
-        alert(err)
-    })
+    .catch(error => {alert(error)})
 }
 
 function addPropField(data, tprop) {

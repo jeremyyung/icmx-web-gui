@@ -1,21 +1,8 @@
-import { setUrlParam,showLoader,resetUrlParams } from './helpers.js';
+import { setUrlParam,showLoader,resetUrlParams,sendGet } from './helpers.js';
 import { fillCustList } from './custlist.js';
 import { updateCmdLog } from './cmdlog.js'
 
 var api_url = document.getElementById('endpoint_url').textContent
-var test_data = {
-	"cmd": "./icmlt search ",
-	"results": {
-		"cp_exit_code": 0,
-		"data": [
-			"AMD",
-			"Finisar",
-			"Xilinx"
-		],
-		"data_category": "client_list",
-		"return_code": 0
-	}
-}
 
 function makeBtns(){
     getGDP()
@@ -58,27 +45,11 @@ function getSearchFn(dom_button, script_name) {
         resetUrlParams()
         setUrlParam('script',script_name)
         var full_call_url = api_url + "/search/" + script_name
-
-        //**temp
-//        fillCustList(test_data)
-//        updateCmdLog(test_data)
-//        showLoader(false)
-        //**
-
-        fetch(full_call_url,
-            {
-                "method": "GET"
-            })
-        .then(response => response.json())
-        .then(data => {
+        sendGet(full_call_url)
+        .then(data =>{
             fillCustList(data)
-            updateCmdLog(data)
-            showLoader(false)
         })
-        .catch(err => {
-            alert(err)
-            showLoader(false)
-        })
+        .catch(error => {alert(error)})
     }
 }
 

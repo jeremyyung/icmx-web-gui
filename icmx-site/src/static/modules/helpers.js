@@ -18,7 +18,7 @@ function setUrlParam(key,value){ //Sets search params in URL
     history.replaceState(null,null,currenturl)
 }
 
-function fmtUrlParams(showscript=true,noregx_list=[]){
+function fmtUrlParams(showscript=true,noregx_list=[],skip_params=[]){
     var currenturl = new URL(window.location.href)
     var param_string = ''
     currenturl.searchParams.forEach(function(value,key){
@@ -30,17 +30,19 @@ function fmtUrlParams(showscript=true,noregx_list=[]){
             else {
                 param_string = "?"
             }
-            return;
         }
         else if (noregx_list.includes(key)){
             true_param = key + "=" + value + "&"
+        }
+        else if (skip_params.includes(key)){
+            //do nothing
         }
         else{
             true_param = key + "=" + "^" + value + "$&"
         }
         param_string = param_string + true_param
     })
-    return param_string
+    return param_string.replace(/&$/,"") //cutoff trailing '&'
 }
 
 function resetUrlParams(){

@@ -1,5 +1,5 @@
 import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost } from './helpers.js'
-import { setPropPane } from './proppane.js'
+import { setPropPane, hasChanged } from './proppane.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
 function postLicInfo(data){
@@ -15,9 +15,9 @@ function postLicInfo(data){
     }
 
     var licdata = data['results']['data']
+    var form_btn_list = ['Propvals']
     if(data['results']['data_category'] != 'client_license'){
         alert(licdata)
-        var form_btn_list = ['Propvals']
     }
     else {
         for (var key in licdata){
@@ -29,6 +29,7 @@ function postLicInfo(data){
             dinput.id = key
             dinput.readOnly = true
             dinput.value = licdata[key]
+            dinput.addEventListener('input',hasChanged)
             if(dinput.name == 'expires' || dinput.name == 'Expiration' || dinput.name == 'Users' || dinput.name == 'users') {
                 dinput.readOnly = false
                 if(dinput.name == 'Users' || dinput.name == 'users'){
@@ -42,7 +43,7 @@ function postLicInfo(data){
             lic_form.appendChild(label)
             lic_form.appendChild(dinput)
         }
-        var form_btn_list = ['Renew', 'Notify', 'Propvals']
+        var form_btn_list = ['Renew', 'Notify', 'Propvals', 'Clone']
     }
 
     ipanel.appendChild(lic_form)
@@ -81,7 +82,40 @@ function submitAction(submit_action){
                 alert("Only used for GDPXL licenses.")
             }
             break
+        case 'Clone':
+            getClonePrompt()
+            break
+        default:
+            alert("Unknown property form submitAction().")
     }
+}
+
+function getClonePrompt(){
+    var lic_form = document.getElementById('lic_form')
+    var cl_form = document.createElement('form')
+    cl_form.id = "clone_form"
+    var cl_label = document.createElement('label')
+    cl_label.innerHTML = "New Hostname"
+    cl_form.onsubmit = function(){
+        var clone_params = fmtUrlParams(true,[],['host']) + "&host=" + document.getElementById('clone_hostname').value
+        var full_call_url = api_url + "/clone/" + clone_params
+        sendPost(full_call_url,{})
+        deleteObj('clone_form')
+        return false
+    }
+    var cl_input = document.createElement('input')
+    cl_input.type = 'text'
+    cl_input.name = 'clone_hostname'
+    cl_input.id = 'clone_hostname'
+    cl_input.required = true
+    cl_input.addEventListener('input',hasChanged)
+    var cl_button = document.createElement('input')
+    cl_button.type = 'submit'
+
+    cl_form.appendChild(cl_label)
+    cl_form.appendChild(cl_input)
+    cl_form.appendChild(cl_button)
+    lic_form.after(cl_form)
 }
 
 export { postLicInfo }

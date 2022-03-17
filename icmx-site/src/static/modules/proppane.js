@@ -76,4 +76,4 @@ function hasChanged(pevent){
     changed_obj.className = "changed"
 }
 
-export { setPropPane }
+export { setPropPane, hasChanged }

@@ -56,7 +56,8 @@ function getCellFn(data_category,obj_name){
                 sendGet(full_call_url)
                 .then(data => {
                     deleteObj('lic_form')
-                    if(data['results']['data_category'] == 'client_license'){
+                    var result_category = data['results']['data_category']
+                    if(result_category == 'client_license'){
                         //If a license is returned, show the license info
                         postLicInfo(data)
                         //GDP & GDPXL use different category names, ensures the url params are set correctly.
@@ -71,8 +72,12 @@ function getCellFn(data_category,obj_name){
                             setUrlParam('group', selected_group)
                         }
                     }
-                    else{
-                        //If a group list is returned, populate sub-table
+                    else if(result_category == 'noprompt'){
+                        //noprompt category means unexpected results
+                        alert(data['results']['data'])
+                    }
+                    else {
+                        //If a group/host list is returned, populate sub-table
                         popTable({'pobj':pevent.srcElement, 'data':data, 'append':false})
                     }
                 })

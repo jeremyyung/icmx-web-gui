@@ -1,12 +1,15 @@
 import { setUrlParam,showLoader,resetUrlParams,sendGet } from './helpers.js';
 import { fillCustList } from './custlist.js';
 import { updateCmdLog } from './cmdlog.js'
+import { addInputField } from './uitemplates.js'
+import { getAddForm } from './addform.js'
 
 var api_url = document.getElementById('endpoint_url').textContent
 
 function makeBtns(){
     getGDP()
     getGDPXL()
+    getAdd()
 }
 
 function getGDP(){ //Button to fetch all GDP customers
@@ -19,6 +22,12 @@ function getGDPXL(){ //Button to fetch all GDPXL customers
     var gdpxl_btn = btnSkeleton('GDPXL', 'b_container', 'btn_gdpxl')
     gdpxl_btn.onclick = getSearchFn(gdpxl_btn,'icmgdpxlt')
     gdpxl_btn.name = 'icmgdpxlt'
+}
+
+function getAdd(){ //Button to create a new host
+    var gdpxl_btn = btnSkeleton('ADD', 'b_container', 'btn_add')
+    gdpxl_btn.onclick = function(){ getAddForm() }
+    gdpxl_btn.name = 'addhost'
 }
 
 function btnSkeleton(title, parent_div, btn_id){

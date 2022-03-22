@@ -16,7 +16,7 @@ input{
 }
 
 input[type=text]:read-write.changed, input[type=number]:read-write.changed{
-  border: 3px solid red;
+  border: 3px solid lightsalmon;
 }
 
 input[type=text]:read-write, input[type=number]:read-write{

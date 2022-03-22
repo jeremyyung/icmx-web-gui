@@ -111,7 +111,6 @@ function getClonePrompt(){
     cl_input.addEventListener('input',hasChanged)
     var cl_button = document.createElement('input')
     cl_button.type = 'submit'
-
     cl_form.appendChild(cl_label)
     cl_form.appendChild(cl_input)
     cl_form.appendChild(cl_button)

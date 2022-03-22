@@ -1,4 +1,4 @@
-function addInputField({field_type='text',field_id='',default_value=''} = {}) {
+function newTextField({field_type='text',field_id='',default_value=''} = {}) {
     var dinput = document.createElement('input')
     dinput.type = field_type
     dinput.name = field_id
@@ -8,10 +8,9 @@ function addInputField({field_type='text',field_id='',default_value=''} = {}) {
     return dinput
 }
 
-
 function setChClass(pevent){
     var changed_obj = pevent.srcElement
     changed_obj.className = "changed"
 }
 
-export{ addInputField }
+export{ newTextField } //addInputField

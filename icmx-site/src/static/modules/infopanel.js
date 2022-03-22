@@ -1,5 +1,6 @@
 import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost } from './helpers.js'
 import { setPropPane, hasChanged } from './proppane.js'
+import { newTextField } from './uitemplates.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
 function postLicInfo(data){
@@ -23,13 +24,9 @@ function postLicInfo(data){
         for (var key in licdata){
             var label = document.createElement('label')
             label.innerHTML = key
-            var dinput = document.createElement('input')
-            dinput.type = 'text'
-            dinput.name = key
-            dinput.id = key
+            var dinput = newTextField({field_id:key})
             dinput.readOnly = true
             dinput.value = licdata[key]
-            dinput.addEventListener('input',hasChanged)
             if(dinput.name == 'expires' || dinput.name == 'Expiration' || dinput.name == 'Users' || dinput.name == 'users') {
                 dinput.readOnly = false
                 if(dinput.name == 'Users' || dinput.name == 'users'){
@@ -103,12 +100,9 @@ function getClonePrompt(){
         deleteObj('clone_form')
         return false
     }
-    var cl_input = document.createElement('input')
-    cl_input.type = 'text'
-    cl_input.name = 'clone_hostname'
-    cl_input.id = 'clone_hostname'
+
+    var cl_input = newTextField({field_id:'clone_hostname'})
     cl_input.required = true
-    cl_input.addEventListener('input',hasChanged)
     var cl_button = document.createElement('input')
     cl_button.type = 'submit'
     cl_form.appendChild(cl_label)

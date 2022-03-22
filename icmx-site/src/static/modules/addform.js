@@ -1,5 +1,5 @@
 import { setUrlParam,showLoader,resetUrlParams,sendGet,wipeDisplay,deleteObj,sendPost } from './helpers.js';
-import { addInputField } from './uitemplates.js'
+import { newTextField } from './uitemplates.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
 function getAddForm(){
@@ -25,7 +25,6 @@ function getAddForm(){
         temp_option.innerHTML = element
         script_select.appendChild(temp_option)
     })
-    script_select.style = "display:block"
     add_form.appendChild(sel_label)
     add_form.appendChild(script_select)
 
@@ -33,7 +32,7 @@ function getAddForm(){
     input_elements.forEach(element => {
         var ilabel = document.createElement('label')
         ilabel.innerHTML = element
-        var ifield = addInputField({ field_id: element })
+        var ifield = newTextField({ field_id: element })
         if (element == "expiration") {
             ifield.pattern = "[0-9]{4}/[0-9]{2}/[0-9]{2}"
             ifield.title = "YYYY/MM/DD"

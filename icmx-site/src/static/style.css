@@ -11,10 +11,15 @@ li:hover { background-color: yellow; }
   justify-content: space-between;
 }
 
+/*Arrange all inputs vertically*/
 input{
   display: block;
 }
+select{
+  display: block;
+}
 
+/*Highlights for editable input prompts*/
 input[type=text]:read-write.changed, input[type=number]:read-write.changed{
   border: 3px solid lightsalmon;
 }
@@ -23,17 +28,19 @@ input[type=text]:read-write, input[type=number]:read-write{
   border: 3px solid lime;
 }
 
+/*Top text area that handles tracked commands.*/
 #command_log {
     width: 100%;
     height: 40px;
     background: beige
 }
 
-/*Toggle background for clicked button*/
+/*Shade in clicked buttons*/
 button[value="selected"] {
     background-color: lightblue;
 }
 
+/*Loading overly and text shown during REST calls*/
 #loading_overlay {
   background-color: rgba(0,0,0,0.5);
   display: block;

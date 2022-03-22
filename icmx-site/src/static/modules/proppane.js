@@ -1,5 +1,6 @@
 import { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost,sendGet } from './helpers.js'
 import { updateCmdLog } from './cmdlog.js'
+import { newTextField } from './uitemplates.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
 function setPropPane(){
@@ -30,7 +31,6 @@ function setPropPane(){
 }
 
 async function getPropVals() {
-    showLoader(true)
     const target_props = ['Uuid','Quotas']
     for (var index in target_props) {
         var tprop = target_props[index]
@@ -45,7 +45,6 @@ async function getPropVals() {
         submit_btn.style = 'display:inline'
         prop_form.appendChild(submit_btn)
     }
-    showLoader(false)
 }
 
 function fetchProp(tprop){
@@ -61,12 +60,8 @@ function addPropField(data, tprop) {
     var prop_form_obj = document.getElementById('prop_form')
     var label = document.createElement('label')
     label.innerHTML = tprop
-    var dinput = document.createElement('input')
-    dinput.type = 'text'
-    dinput.name = tprop
-    dinput.id = tprop
+    var dinput = newTextField({field_id:tprop})
     dinput.value = data['results']['data']
-    dinput.addEventListener('input',hasChanged)
     prop_form_obj.appendChild(label)
     prop_form_obj.appendChild(dinput)
 }

@@ -1,7 +1,5 @@
-import { setUrlParam,showLoader,resetUrlParams,sendGet } from './helpers.js';
+import { setUrlParam,resetUrlParams,sendGet } from './helpers.js';
 import { fillCustList } from './custlist.js';
-import { updateCmdLog } from './cmdlog.js'
-import { addInputField } from './uitemplates.js'
 import { getAddForm } from './addform.js'
 
 var api_url = document.getElementById('endpoint_url').textContent
@@ -46,7 +44,6 @@ function btnSkeleton(title, parent_div, btn_id){
 
 function getSearchFn(dom_button, script_name) {
     return function() {
-        showLoader(true)
         document.querySelectorAll("button").forEach(function(node) {
             node.value=""
         })

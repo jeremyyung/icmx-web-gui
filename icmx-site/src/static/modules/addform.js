@@ -1,4 +1,4 @@
-import { setUrlParam,showLoader,resetUrlParams,sendGet,wipeDisplay,deleteObj,sendPost,setActiveBtn } from './helpers.js';
+import { setUrlParam,showLoader,resetUrlParams,sendGet,wipeDisplay,deleteObj,sendPost,setActiveBtn } from './helpers.js'
 import { newTextField } from './uitemplates.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
@@ -39,7 +39,7 @@ function getAddForm(button_obj){
             ifield.title = "YYYY/MM/DD"
         }
         if (element == "administrators") {
-            ifield.pattern = "[a-zA-Z0-90-9_]+@.+"
+            ifield.pattern = "[a-zA-Z0-90-9_.]+@.+"
             ifield.title = "a@aol.com,b@aol.com"
         }
         if (element == "group") { ifield.value = 'icmanage' }

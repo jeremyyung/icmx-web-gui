@@ -1,8 +1,9 @@
-import { setUrlParam,showLoader,resetUrlParams,sendGet,wipeDisplay,deleteObj,sendPost } from './helpers.js';
+import { setUrlParam,showLoader,resetUrlParams,sendGet,wipeDisplay,deleteObj,sendPost,setActiveBtn } from './helpers.js';
 import { newTextField } from './uitemplates.js'
 var api_url = document.getElementById('endpoint_url').textContent
 
-function getAddForm(){
+function getAddForm(button_obj){
+    setActiveBtn(button_obj)
     var panel_ids = ['item_panel', 'info_panel', 'action_panel']
     panel_ids.forEach(element => deleteObj(element))
     var parent_obj = document.getElementById('display_board')
@@ -70,7 +71,6 @@ function getAddForm(){
                         data_payload[ele.id] = ele.value
                         break
                 }
-
             })
             sendPost(full_call_url,data_payload)
             return false
@@ -79,7 +79,6 @@ function getAddForm(){
             console.log(err)
             return false
         }
-
     }
 }
 

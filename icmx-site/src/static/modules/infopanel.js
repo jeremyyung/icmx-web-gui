@@ -16,8 +16,16 @@ function postLicInfo(data){
     }
 
     var licdata = data['results']['data']
-    var form_btn_list = ['Propvals']
-    if(data['results']['data_category'] != 'client_license'){
+    var form_btn_list = ['Propvals','Renew']
+    if(data['results']['data_category'] == 'noprompt'){
+        var label = document.createElement('label')
+        label.innerHTML = 'Expiration'
+        var dinput = newTextField({field_id:'Expiration'})
+        dinput.pattern = "[0-9]{4}/[0-9]{2}/[0-9]{2}"
+        dinput.title = "YYYY/MM/DD"
+        dinput.readOnly = false
+        lic_form.appendChild(label)
+        lic_form.appendChild(dinput)
         alert(licdata)
     }
     else {

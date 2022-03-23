@@ -1,4 +1,4 @@
-import { setUrlParam,resetUrlParams,sendGet } from './helpers.js';
+import { setUrlParam,resetUrlParams,sendGet,setActiveBtn } from './helpers.js';
 import { fillCustList } from './custlist.js';
 import { getAddForm } from './addform.js'
 
@@ -23,9 +23,9 @@ function getGDPXL(){ //Button to fetch all GDPXL customers
 }
 
 function getAdd(){ //Button to create a new host
-    var gdpxl_btn = btnSkeleton('ADD', 'b_container', 'btn_add')
-    gdpxl_btn.onclick = function(){ getAddForm() }
-    gdpxl_btn.name = 'addhost'
+    var add_btn = btnSkeleton('ADD', 'b_container', 'btn_add')
+    add_btn.onclick = function(){ getAddForm(add_btn) }
+    add_btn.name = 'addhost'
 }
 
 function btnSkeleton(title, parent_div, btn_id){
@@ -44,11 +44,7 @@ function btnSkeleton(title, parent_div, btn_id){
 
 function getSearchFn(dom_button, script_name) {
     return function() {
-        document.querySelectorAll("button").forEach(function(node) {
-            node.value=""
-        })
-        dom_button.value = 'selected'
-        resetUrlParams()
+        setActiveBtn(dom_button)
         setUrlParam('script',script_name)
         var full_call_url = api_url + "/search/" + script_name
         sendGet(full_call_url)

@@ -129,4 +129,13 @@ async function sendGet(callurl){
     return data
 }
 
-export { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost,sendGet }
+function setActiveBtn(button_obj){
+    /*Changes button values to change background color*/
+    document.querySelectorAll("button").forEach(function(node) {
+        node.value=""
+    })
+    button_obj.value = 'selected'
+    resetUrlParams()
+}
+
+export { setUrlParam,showLoader,getUrlParam,getParamStr,resetUrlParams,deleteObj,wipeDisplay,chainParams,fmtUrlParams,sendPost,sendGet,setActiveBtn }

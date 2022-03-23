@@ -13,4 +13,4 @@ function setChClass(pevent){
     changed_obj.className = "changed"
 }
 
-export{ newTextField } //addInputField
+export{ newTextField }

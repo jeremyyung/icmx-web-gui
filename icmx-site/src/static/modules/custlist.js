@@ -56,6 +56,7 @@ function getCellFn(data_category,obj_name){
                 sendGet(full_call_url)
                 .then(data => {
                     deleteObj('lic_form')
+                    deleteObj('clone_form')
                     var result_category = data['results']['data_category']
                     if(result_category == 'client_license' || result_category == 'noprompt'){
                         //If a license is returned, show the license info
@@ -86,6 +87,7 @@ function getCellFn(data_category,obj_name){
             }
         case 'host_list':
             return function(pevent){
+                deleteObj('clone_form')
                 resetUrlParams()
                 chainParams(pevent.srcElement.getAttribute('id_chain'))
                 var full_call_url = api_url + "/search/" + fmtUrlParams()

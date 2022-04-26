@@ -1,6 +1,6 @@
-from icmxgui import app
+from icmxgui import app as application
 
 if __name__ == '__main__':
     PORT = 7070
-    app.config['DEBUG'] = False
-    app.run(host='0.0.0.0', port=PORT)
+    application.config['DEBUG'] = False
+    application.run(host='0.0.0.0', port=PORT)

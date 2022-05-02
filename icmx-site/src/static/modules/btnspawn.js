@@ -33,12 +33,12 @@ function getHelp(){ //Button to create a new host
     var add_btn = btnSkeleton('HELP', 'b_container', 'btn_help')
     add_btn.onclick = function(){ 
       alert(
-        "GDP/GDPXL: Select GDP or GDPXL database.\n\n" +
-        "ADD: This is for creating a new customer. If customer already exists, drill down in client_list.\n\n" +
-        "RENEW: Update expiration date and user count.\n\n" +
-        "NOTIFY: Send license email to customer.\n\n" +
-        "PROPVALS: Modify 'UUID' and 'QUOTAS' values; GDPXL only.\n\n" +
-        "CLONE: Adds a new host to the selected cusomter."
+        "--GDP/GDPXL--: Select GDP or GDPXL database.\n" +
+        "--ADD--: This is for creating a new customer. If customer already exists, drill down in client_list.\n" +
+        "--RENEW--: Update expiration date and user count.\n" +
+        "--NOTIFY--: Send license email to customer.\n" +
+        "--PROPVALS--: Modify 'UUID' and 'QUOTAS' values; GDPXL only.\n" +
+        "--CLONE--: Adds a new host to the selected cusomter."
       ) 
     }
     add_btn.name = 'helpalert'

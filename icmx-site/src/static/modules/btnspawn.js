@@ -8,6 +8,7 @@ function makeBtns(){
     getGDP()
     getGDPXL()
     getAdd()
+    getHelp()
 }
 
 function getGDP(){ //Button to fetch all GDP customers
@@ -26,6 +27,21 @@ function getAdd(){ //Button to create a new host
     var add_btn = btnSkeleton('ADD', 'b_container', 'btn_add')
     add_btn.onclick = function(){ getAddForm(add_btn) }
     add_btn.name = 'addhost'
+}
+
+function getHelp(){ //Button to create a new host
+    var add_btn = btnSkeleton('HELP', 'b_container', 'btn_help')
+    add_btn.onclick = function(){ 
+      alert(
+        "GDP/GDPXL: Select GDP or GDPXL database.\n\n" +
+        "ADD: This is for creating a new customer. If customer already exists, drill down in client_list.\n\n" +
+        "RENEW: Update expiration date and user count.\n\n" +
+        "NOTIFY: Send license email to customer.\n\n" +
+        "PROPVALS: Modify 'UUID' and 'QUOTAS' values; GDPXL only.\n\n" +
+        "CLONE: Adds a new host to the selected cusomter."
+      ) 
+    }
+    add_btn.name = 'helpalert'
 }
 
 function btnSkeleton(title, parent_div, btn_id){

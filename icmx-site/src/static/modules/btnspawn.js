@@ -1,7 +1,7 @@
 import { setUrlParam,resetUrlParams,sendGet,setActiveBtn } from './helpers.js';
 import { fillCustList } from './custlist.js';
 import { getAddForm } from './addform.js'
-//temp comment
+
 var api_url = document.getElementById('endpoint_url').textContent
 
 function makeBtns(){
